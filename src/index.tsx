@@ -2,11 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-const container = document.getElementById("root") as HTMLDivElement;
-const root = ReactDOM.createRoot(container);
+let REACT_18 = true;
+const root = document.getElementById("root") as HTMLDivElement;
 
-root.render(
-  <React.StrictMode>
+if (REACT_18) {
+  console.log("REACT_18", REACT_18);
+  ReactDOM.createRoot(root).render(
+    // <React.StrictMode>
     <App />
-  </React.StrictMode>
-);
+    // </React.StrictMode>
+  );
+} else {
+  ReactDOM.render(
+    // <React.StrictMode>
+    <App />,
+    // </React.StrictMode>,
+    root
+  );
+}
