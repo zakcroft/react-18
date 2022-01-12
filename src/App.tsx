@@ -5,6 +5,7 @@ import { store } from "./store";
 import Batching from "./components/Batching";
 
 import {
+  PageLayout,
   Home,
   UseDeferredValue,
   StartTransition,
@@ -20,7 +21,9 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
+          <Route element={<PageLayout />}>
+            <Route index element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="batching" element={<Batching />} />
             <Route path="startTransition" element={<StartTransition />} />
             <Route path="useDeferredValue" element={<UseDeferredValue />} />
@@ -38,14 +41,6 @@ function App() {
               <Route path=":invoiceId" element={<Invoice />} />
             </Route>
             <Route path="*" element={<NoMatch />} />
-
-            {/*<Route path="startTransition" element={<StartTransition />} />*/}
-            {/*<Route index element={<StartTransition />} />*/}
-            {/*<Route path="teams" element={<Teams />}>*/}
-            {/*  <Route path=":teamId" element={<Team />} />*/}
-            {/*  <Route path="new" element={<NewTeamForm />} />*/}
-            {/*  <Route index element={<LeagueStandings />} />*/}
-            {/*</Route>*/}
           </Route>
         </Routes>
       </BrowserRouter>

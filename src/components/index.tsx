@@ -1,3 +1,4 @@
+export * from "./PageLayout";
 export * from "./Nav";
 export * from "./Home";
 export * from "./NoMatch";

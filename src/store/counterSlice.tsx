@@ -11,8 +11,8 @@ const initialState: CounterState = {
   value: 0,
 };
 
-export const invoices = createSlice({
-  name: "invoices",
+export const counter = createSlice({
+  name: "count",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -29,9 +29,9 @@ export const invoices = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = invoices.actions;
+export const { increment, decrement, incrementByAmount } = counter.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.invoices;
+export const selectCount = (state: RootState) => state.counter.value;
 
-export default invoices.reducer;
+export default counter.reducer;
