@@ -1,16 +1,29 @@
+import { useMemo } from "react";
 import {
   NavLink,
   Outlet,
   useSearchParams,
   useLocation,
 } from "react-router-dom";
-import { getInvoices } from "../api/invoices";
+
+import { InvoiceType, useGetInvoicesQuery } from "../api/";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 
 export function Invoices() {
-  const invoices = getInvoices();
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  console.log(location);
+
+  // The `state` arg is correctly typed as `RootState` already
+  const count = useAppSelector((s) => s.invoices);
+  const dispatch = useAppDispatch();
+  const { data: invoices = [] } = useGetInvoicesQuery();
+
+  const sortedInvoices = useMemo(
+    () =>
+      invoices.slice().sort((a: InvoiceType, b: InvoiceType) => a.id - b.id),
+    [invoices]
+  );
+
   return (
     <>
       <div className={"flex justify-center text-black"}>
@@ -27,26 +40,26 @@ export function Invoices() {
           }}
         />
       </div>
-      <div className={"flex flex row items-center"}>
+      <div className={"flex flex row items-center relative"}>
         <nav className={"p-4 border-solid border-r-2"}>
-          {invoices
-            .filter((invoice) => {
+          {sortedInvoices
+            .filter((invoice: InvoiceType) => {
               let filter = searchParams.get("filter");
               if (!filter) return true;
               let name = invoice.name.toLowerCase();
               return name.startsWith(filter.toLowerCase());
             })
-            .map((invoice) => (
+            .map((invoice: InvoiceType) => (
               <NavLink
                 className={`block m-5 hover:text-amber-300 hover:underline ${({
                   isActive,
                 }: {
                   isActive: Boolean;
                 }) => (isActive ? "red" : "blue")}`}
-                to={`./${invoice.number}/${location.search}`}
-                key={invoice.number}
+                to={`./${invoice.id}/${location.search}`}
+                key={invoice.id}
               >
-                {invoice.name} {invoice.number}
+                {invoice.name} {invoice.id}
               </NavLink>
             ))}
         </nav>

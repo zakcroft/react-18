@@ -4,6 +4,7 @@ import sleep from "sleep-promise";
 // LOOK FOR "START HERE" on line #62
 
 export function StartTransition() {
+  console.log("StartTransition");
   return (
     <div className={"text-white"}>
       <h1 className="mb-4 text-2xl font-medium sm:text-3xl title-font text-white-900">
