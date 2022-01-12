@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import dbBackupJson from "../dbBackup.json";
 export type InvoiceType = {
   id: number;
   name: string;
@@ -42,6 +42,14 @@ export const invoicesApi = createApi({
       },
       invalidatesTags: [{ type: "Invoices" }],
     }),
+    resetInvoices: builder.mutation<InvoiceType, void>({
+      query: () => ({
+        url: `reset`,
+        method: "POST",
+        body: dbBackupJson,
+      }),
+      invalidatesTags: [{ type: "Invoices" }],
+    }),
   }),
 });
 
@@ -52,4 +60,5 @@ export const {
   useUpdateInvoicesMutation,
   useDeleteInvoicesMutation,
   useGetInvoiceQuery,
+  useResetInvoicesMutation,
 } = invoicesApi;

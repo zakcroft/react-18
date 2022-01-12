@@ -6,17 +6,17 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { InvoiceType, useGetInvoicesQuery } from "../api/";
-import { useAppSelector, useAppDispatch } from "../store/hooks";
+import {
+  InvoiceType,
+  useGetInvoicesQuery,
+  useResetInvoicesMutation,
+} from "../api/";
 
 export function Invoices() {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-
-  // The `state` arg is correctly typed as `RootState` already
-  const count = useAppSelector((s) => s.invoices);
-  const dispatch = useAppDispatch();
   const { data: invoices = [] } = useGetInvoicesQuery();
+  const [resetInvoices] = useResetInvoicesMutation();
 
   const sortedInvoices = useMemo(
     () =>
@@ -62,7 +62,18 @@ export function Invoices() {
                 {invoice.name} {invoice.id}
               </NavLink>
             ))}
+          <button
+            className={
+              "flex px-5 py-2 mx-auto mt-6 text-white bg-indigo-500 rounded border-0 focus:outline-none hover:bg-indigo-600"
+            }
+            onClick={() => {
+              resetInvoices();
+            }}
+          >
+            Reset
+          </button>
         </nav>
+
         <Outlet />
       </div>
     </>
