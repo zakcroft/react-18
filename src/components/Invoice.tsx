@@ -1,8 +1,15 @@
-import { useCallback, useMemo, useState, ChangeEvent } from "react";
+import {
+  Suspense,
+  useCallback,
+  useMemo,
+  useState,
+  ChangeEvent,
+  useEffect,
+} from "react";
 import { createSelector } from "@reduxjs/toolkit";
 import { useParams, useNavigate } from "react-router-dom";
 
-import {
+import invoicesApi, {
   InvoiceType,
   useGetInvoicesQuery,
   useDeleteInvoicesMutation,
@@ -22,6 +29,7 @@ export function Invoice() {
     isError,
     error,
   } = useGetInvoiceQuery(invoiceId);
+
   const [updateInvoice] = useUpdateInvoicesMutation();
   const [deleteInvoice] = useDeleteInvoicesMutation();
   const updateInvoiceCb = useCallback(
@@ -29,6 +37,14 @@ export function Invoice() {
       updateInvoice({ ...invoice, amount }),
     [updateInvoice, amount]
   );
+
+  // useEffect(() => {
+  //   async () => {
+  //     const done = await Promise.all(
+  //       invoicesApi.util.getRunningOperationPromises()
+  //     );
+  //   };
+  // }, [invoicesApi]);
 
   // const selectInvoice = useMemo(() => {
   //   // Return a unique selector instance  so that
@@ -60,11 +76,13 @@ export function Invoice() {
 
   return (
     <main className={"absolute left-1/2 top-1/4 -translate-x-1/2"}>
-      <h2>Total Due: £{invoice?.amount}</h2>
-      <p>
-        {invoice?.name}: {invoice?.id}
-      </p>
-      <p>Due Date: {invoice?.due}</p>
+      <Suspense fallback={<h1>Loading invoice...</h1>}>
+        <h2>Total Due: £{invoice?.amount}</h2>
+        <p>
+          {invoice?.name}: {invoice?.id}
+        </p>
+        <p>Due Date: {invoice?.due}</p>
+      </Suspense>
       <div className="relative my-4">
         <input
           value={amount}

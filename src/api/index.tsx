@@ -62,3 +62,5 @@ export const {
   useGetInvoiceQuery,
   useResetInvoicesMutation,
 } = invoicesApi;
+
+export default invoicesApi;
