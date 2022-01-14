@@ -72,7 +72,7 @@ export function Invoice() {
   //   },
   // });
 
-  console.log("invoice===", invoice);
+  //console.log("invoice===", invoice);
 
   return (
     <main className={"absolute left-1/2 top-1/4 -translate-x-1/2"}>

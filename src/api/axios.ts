@@ -45,7 +45,7 @@ export const pokemonApi = createApi({
   }),
 });
 
-console.log(pokemonApi);
+//console.log(pokemonApi);
 
 export const {
   useGetPokemonQuery,

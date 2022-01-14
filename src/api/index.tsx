@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import dbBackupJson from "../dbBackup.json";
+import dbBackupJson from "../db/dbBackup.json";
 export type InvoiceType = {
   id: number;
   name: string;

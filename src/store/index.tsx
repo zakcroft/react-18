@@ -6,7 +6,7 @@ import counter from "./counterSlice";
 import { invoicesApi } from "../api/";
 import { pokemonApi } from "../api/axios";
 
-console.log("invoicesApi", invoicesApi);
+//console.log("invoicesApi", invoicesApi);
 
 export const store = configureStore({
   reducer: {
